@@ -28,6 +28,34 @@ Una biblioteca le pide que cree un sistema para administrar sus libros y aquí e
 Se puede utilizar React, Vue, Blade, Templates, o cualquier otro como frontend
 
 
+# Instalacion de la app
+1.- Clonar o descargar la aplicacion
+2.- Situarse en la carpeta raiz de la aplicacion
+3.- Instalar las dependencias del composer (tener instalado composer en el Sistema Operativo)
+```
+composer install
+```
+4.- Instalar las dependencias del node_modules (tener instalado node en el Sistema Operativo)
+```
+npm install
+```
+5.- Especificar las variables de entorno para la conexion con la base de datos en el archivo .env
+```
+cp .env.example .env
+```
+
+6.- Crear la base de datos especificado en la variable de entorno anteriormente en el gestor de la base de datos(en este caso se utiliza mysql)
+
+
+7.- Hacer la migracion de la base de datos (crear las tablas)
+```
+php artisan migrate
+```
+
+8.- Probar la aplicacion
+```
+*php artisan serve*
+```
 
 # Documentacion de laravel
 
