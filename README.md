@@ -62,6 +62,18 @@ php artisan serve
 ```
 
 
+# Desarrollando la aplicacion
+
+1.- Para editar el frontend solo basta con ejecutar el siguiente comando (como tiene instalado el BrowserSync los cambios se veran reflejados al instante):
+```
+npm run watch
+```
+
+2.- Para el deploy en produccion se tiene que ejecutar el siguiente comando:
+```
+npm run prod
+```
+
 # Documentacion de laravel
 
 ## Learning Laravel

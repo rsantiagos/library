@@ -16,6 +16,10 @@ mix.js('resources/js/app.js', 'public/js')
         //
     ]);
 
+mix.browserSync({
+    proxy: 'http://127.0.0.1:8000'
+});
+
 if (mix.inProduction()) {// In production environtment use versioning
     mix.version();
 }

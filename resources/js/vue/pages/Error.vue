@@ -1,6 +1,6 @@
 <template>
     <div>
-        llegando aqui
+        LLegando aqui
     	<router-view></router-view>
     </div>
 </template>
