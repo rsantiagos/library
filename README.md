@@ -30,15 +30,19 @@ Se puede utilizar React, Vue, Blade, Templates, o cualquier otro como frontend
 
 # Instalacion de la app
 1.- Clonar o descargar la aplicacion
+
 2.- Situarse en la carpeta raiz de la aplicacion
+
 3.- Instalar las dependencias del composer (tener instalado composer en el Sistema Operativo)
 ```
 composer install
 ```
+
 4.- Instalar las dependencias del node_modules (tener instalado node en el Sistema Operativo)
 ```
 npm install
 ```
+
 5.- Especificar las variables de entorno para la conexion con la base de datos en el archivo .env
 ```
 cp .env.example .env
@@ -54,8 +58,9 @@ php artisan migrate
 
 8.- Probar la aplicacion
 ```
-*php artisan serve*
+php artisan serve
 ```
+
 
 # Documentacion de laravel
 
