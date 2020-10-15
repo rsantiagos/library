@@ -1,14 +1,23 @@
+import Vue from "vue";
+import VueRouter from "vue-router";
+import Loading from "vue-loading-overlay";
+import helper from "./vue/services/helper";
+
 window._ = require('lodash');
 
+window.Vue = Vue;
+Vue.use(VueRouter);
+Vue.use(Loading);
+window.helper = helper;
 /**
  * We'll load the axios HTTP library which allows us to easily issue requests
  * to our Laravel back-end. This library automatically handles sending the
  * CSRF token as a header based on the value of the "XSRF" token cookie.
  */
 
-window.axios = require('axios');
-
-window.axios.defaults.headers.common['X-Requested-With'] = 'XMLHttpRequest';
+// window.axios = require('axios');
+// window.axios.defaults.headers.common['X-Requested-With'] = 'XMLHttpRequest';
+import "./vue/services/axios";
 
 /**
  * Echo exposes an expressive API for subscribing to channels and listening
