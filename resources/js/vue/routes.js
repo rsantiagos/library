@@ -3,12 +3,13 @@ import VueRouter from 'vue-router';
 let routes = [
     {
         path: '/',
-        component : require('./pages/Default').default
-    },
-    {
-        path: '*',
-        component : require('./pages/Error').default,
+        component : require('./pages/Default').default,
         children: [
+            {
+                path: '',
+                name: 'Home',
+                component: require('./views/Books').default
+            },
             {
                 path: '*',
                 component: require('./views/404').default
