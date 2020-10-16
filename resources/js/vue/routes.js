@@ -6,13 +6,9 @@ let routes = [
         component : require('./pages/Default').default,
         children: [
             {
-                path: '',
+                path: '*',
                 name: 'Home',
                 component: require('./views/Books').default
-            },
-            {
-                path: '*',
-                component: require('./views/404').default
             }
         ]
     }

@@ -2,6 +2,7 @@ import Vue from "vue";
 import VueRouter from "vue-router";
 import Loading from "vue-loading-overlay";
 import helper from "./vue/services/helper";
+import { BootstrapVue, IconsPlugin } from 'bootstrap-vue';
 
 window._ = require('lodash');
 
@@ -9,6 +10,13 @@ window.Vue = Vue;
 Vue.use(VueRouter);
 Vue.use(Loading);
 window.helper = helper;
+// Install BootstrapVue
+Vue.use(BootstrapVue);
+// Optionally install the BootstrapVue icon components plugin
+Vue.use(IconsPlugin);
+
+import 'bootstrap/dist/css/bootstrap.css';
+import 'bootstrap-vue/dist/bootstrap-vue.css';
 /**
  * We'll load the axios HTTP library which allows us to easily issue requests
  * to our Laravel back-end. This library automatically handles sending the
