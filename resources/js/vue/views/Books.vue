@@ -30,6 +30,7 @@ export default {
     methods: {
         async getBooks(){
             try {
+                let vm = this;
                 let req = await axios.get(`/api/books`);
                 this.books = req.data.data;
 
@@ -58,6 +59,11 @@ export default {
                         value: 'available',
                         text: "Available",
                         sortable: true
+                    },
+                    {
+                        value: 'delete',
+                        text: '',
+                        isButton: true
                     }
                 ];
 
@@ -70,10 +76,29 @@ export default {
                         'published': { 'value': element.published },
                         'user_id': { 'value': element.user_id },
                         'available': { 'value': element.available },
+                        'delete': {
+                                    value: [{
+                                    row: element,
+                                    text: 'Remove',
+                                    class: ['btn', 'btn-danger'],
+                                    func: async function (event, column, field) {
+                                        await vm.deleteBook(field.row.id);
+                                        await vm.getBooks();
+                                        }
+                                    }]
+                                }
                     }
                 });
                 this.tableData.rows = rows;
 
+            } catch (error) {
+                console.error(error);
+            }
+        },
+        async deleteBook(id){
+            try {
+                let req = await axios.delete(`/api/books/`+id);
+                console.log(req);
             } catch (error) {
                 console.error(error);
             }

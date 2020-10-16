@@ -81,6 +81,7 @@ class BookController extends Controller
      */
     public function destroy($id)
     {
-        //
+        Book::destroy($id);
+        return response()->json(['status'=>'ok','message'=>'The book was remove successfully'], 200);
     }
 }
