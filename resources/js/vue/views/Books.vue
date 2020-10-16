@@ -1,6 +1,15 @@
 <template>
     <div>
-        <DataTable v-if="this.tableData.columns.length > 0" :dataTable="tableData"></DataTable>
+        <b-row align-h="end">
+            <b-col cols="4">
+                <router-link :to="{name: 'NewBook'}" tag="button" class="btn btn-outline-primary float-right">New book</router-link>
+            </b-col>
+        </b-row>
+        <b-row class="mt-2">
+            <b-col>
+                <DataTable v-if="this.tableData.columns.length > 0" :dataTable="tableData"></DataTable>
+            </b-col>
+        </b-row>
     </div>
 </template>
 <script>

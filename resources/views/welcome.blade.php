@@ -13,6 +13,7 @@
         <link href="{{ mix('/css/app.css') }}" id="direction" rel="stylesheet">
         <link href="{{ mix('/css/style.css') }}" id="direction" rel="stylesheet">
     <body>
+
         <div id="root">
             <router-view></router-view>
         </div>

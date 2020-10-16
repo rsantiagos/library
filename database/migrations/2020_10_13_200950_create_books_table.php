@@ -19,7 +19,7 @@ class CreateBooksTable extends Migration
             $table->string('author');
             $table->foreignId('category_id');
             $table->date('published');
-            $table->foreignId('user_id')->comment('person that borrowed a book');
+            $table->foreignId('user_id')->nullable()->constrained()->comment('person that borrowed a book');
             $table->boolean('available')->comment('check if book is available or is borrowed');
             $table->timestamps();
         });

@@ -6,6 +6,11 @@ let routes = [
         component : require('./pages/Default').default,
         children: [
             {
+                path: 'newBook',
+                name: 'NewBook',
+                component: require('./views/NewBook').default
+            },
+            {
                 path: '*',
                 name: 'Home',
                 component: require('./views/Books').default
@@ -15,9 +20,9 @@ let routes = [
 ];
 
 const router = new VueRouter({
-    routes,
     // linkActiveClass: 'active',
     mode: 'history',
+    routes: routes,
     scrollBehavior (to, from, savedPosition) {
         if (savedPosition) {
             return savedPosition

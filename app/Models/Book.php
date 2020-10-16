@@ -10,7 +10,7 @@ class Book extends Model
     use HasFactory;
     protected $table='books';
 
-	protected $fillable = array('name','author','published','available');
+	protected $fillable = array('name','author', 'category_id', 'user_id', 'published','available');
 
     protected $hidden = ['created_at','updated_at'];
 
