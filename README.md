@@ -56,6 +56,11 @@ cp .env.example .env
 php artisan migrate
 ```
 
+7.1 Para cargar datos de pruebas ejuctar el siguiente comando
+```
+php artisan migrate:refresh --seed
+```
+
 8.- Probar la aplicacion
 ```
 php artisan serve
