@@ -42,7 +42,7 @@
                     </b-form-group>
 
                     <b-button type="submit" variant="primary">Submit</b-button>
-                    <b-button type="reset" variant="danger">Reset</b-button>
+                    <b-button v-if="!bookID" type="reset" variant="danger">Reset</b-button>
                 </b-form>
             </b-col>
         </b-row>
@@ -58,6 +58,7 @@ export default {
     name:'NewBook',
     data() {
       return {
+        bookID: null,
         form: {
           name: '',
           author: '',
@@ -70,6 +71,10 @@ export default {
       }
     },
     mounted(){
+        if (this.$route.params.id) {
+            this.bookID = this.$route.params.id;
+            this.getBook(this.$route.params.id);
+        }
         this.getCategories();
     },
     methods: {
@@ -87,9 +92,22 @@ export default {
                 console.error(error);
             }
         },
+        async getBook(id){
+            try {
+                let resp = await axios.get('/api/book/' + id);
+                console.log(resp.data.data);
+                this.form = resp.data.data[0];
+            } catch (error) {
+
+            }
+        },
         onSubmit(evt) {
             evt.preventDefault()
-            this.addNewBook(this.form);
+            if (!this.bookID) {
+                this.addNewBook(this.form);
+            }else{
+                this.updateBook(this.form);
+            }
         },
         onReset(evt) {
             evt.preventDefault()
@@ -104,6 +122,14 @@ export default {
                 book.user_id = null;
                 let save = await axios.post("/api/books", book);
                 // console.log(save);
+                this.$router.back();
+            } catch (error) {
+                console.error(error);
+            }
+        },
+        async updateBook(book) {
+            try {
+                let save = await axios.post("/api/books/"+this.bookID, book);
                 this.$router.back();
             } catch (error) {
                 console.error(error);

@@ -11,6 +11,13 @@ let routes = [
                 component: require('./views/NewBook').default
             },
             {
+                path: '/editBook/:id',
+                name: 'EditBook',
+                component: resolve => {
+                    require(['./views/NewBook'], resolve)
+                }
+            },
+            {
                 path: '*',
                 name: 'Home',
                 component: require('./views/Books').default

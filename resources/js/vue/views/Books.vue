@@ -73,6 +73,11 @@ export default {
                         value: 'delete',
                         text: '',
                         isButton: true
+                    },
+                    {
+                        value: 'edit',
+                        text: '',
+                        isButton: true,
                     }
                 ];
 
@@ -87,16 +92,26 @@ export default {
                         'user_id': { 'value': element.user_id },
                         'available': { 'value': element.available },
                         'delete': {
-                                    value: [{
-                                    row: element,
-                                    text: 'Remove',
-                                    class: ['btn', 'btn-danger'],
-                                    func: async function (event, column, field) {
-                                        await vm.deleteBook(field.row.id);
-                                        await vm.getBooks();
-                                        }
-                                    }]
+                            value: [{
+                            row: element,
+                            text: 'Remove',
+                            class: ['btn', 'btn-danger'],
+                            func: async function (event, column, field) {
+                                await vm.deleteBook(field.row.id);
+                                await vm.getBooks();
                                 }
+                            }]
+                        },
+                        'edit': {
+                            value: [{
+                            row: element,
+                            text: 'Edit',
+                            class: ['btn', 'btn-info'],
+                            func: async function (event, column, field) {
+                                    vm.$router.push({ name: 'EditBook', params: { id: field.row.id }});
+                                }
+                            }]
+                        }
                     }
                 });
                 this.tableData.rows = rows;
