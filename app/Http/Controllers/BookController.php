@@ -2,6 +2,7 @@
 
 namespace App\Http\Controllers;
 
+use Illuminate\Support\Facades\DB;
 use Illuminate\Http\Request;
 use App\Models\Book;
 
@@ -14,7 +15,10 @@ class BookController extends Controller
      */
     public function index()
     {
-        $books = Book::all();
+        $books = DB::table('books')
+        ->join('categories', 'books.category_id', '=', 'categories.id')
+        ->select(DB::raw('books.id, books.name, books.author, books.category_id, categories.name category, books.published, case books.available when 1 then "yes" else "no" end as available, books.user_id'))
+        ->get();
         return response()->json(['status'=>'ok','data'=>$books], 200);
     }
 

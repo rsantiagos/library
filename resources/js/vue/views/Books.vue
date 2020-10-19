@@ -55,7 +55,7 @@ export default {
                         sortable: true
                     },
                     {
-                        value: 'category_id',
+                        value: 'category',
                         text: 'Category',
                         sortable: true
                     },
@@ -82,6 +82,7 @@ export default {
                         'name': { 'value': element.name },
                         'author': { 'value': element.author },
                         'category_id': { 'value': element.category_id },
+                        'category': { 'value': element.category },
                         'published': { 'value': element.published },
                         'user_id': { 'value': element.user_id },
                         'available': { 'value': element.available },
