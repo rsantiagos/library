@@ -57,7 +57,12 @@ class BookController extends Controller
      */
     public function show($id)
     {
-        //
+        $book = DB::table('books')
+        ->join('categories', 'books.category_id', '=', 'categories.id')
+        ->select(DB::raw('books.id, books.name, books.author, books.category_id, books.published, books.available, books.user_id'))
+        ->where('books.id', $id)
+        ->get();
+        return response()->json(['status'=>'ok','data'=>$book], 200);
     }
 
     /**
@@ -80,7 +85,8 @@ class BookController extends Controller
      */
     public function update(Request $request, $id)
     {
-        //
+        $book = Book::where('id', $id)->update($request->all());
+        return response()->json(['status'=>'ok','data'=>$book], 200);
     }
 
     /**
