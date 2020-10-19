@@ -10,10 +10,24 @@
                 <DataTable v-if="this.tableData.columns.length > 0" :dataTable="tableData"></DataTable>
             </b-col>
         </b-row>
-        <b-modal id="mBorrow" :title="modalTitle" @ok="handleOk" @hidden="resetModal">
+        <b-modal id="mBorrow" :title="modalTitle" @ok="handleOk" @hidden="resetModal" no-close-on-esc no-close-on-backdrop>
             <form ref="form" @submit.stop.prevent="handleSubmit">
                 <b-form-group v-if="book.available>0" :state="bookState.user" label="User" label-for="user-input" invalid-feedback="User is required">
-                    <b-form-input id="user-input" v-model="book.user" :state="bookState.user" required disabled></b-form-input>
+                    <b-form-input v-model="book.user" :state="bookState.user" required disabled></b-form-input>
+                </b-form-group>
+                <b-form-group v-else :state="bookState.user_id" label="User" label-for="user-select" invalid-feedback="User is required">
+                    <v-select id="user-select" :options="users" :reduce="user => user.id" label="name" v-model="book.user_id">
+                        <template #search="{attributes, events}">
+                            <input
+                            id="user-select"
+                            :state="bookState.user_id"
+                            class="vs__search"
+                            :required="!book.user_id"
+                            v-bind="attributes"
+                            v-on="events"
+                            />
+                        </template>
+                    </v-select>
                 </b-form-group>
             </form>
         </b-modal>
@@ -41,12 +55,15 @@ export default {
             modalTitle: 'Borrow ',
             bookState: {
                 user: null,
+                user_id: null
             },
-            book: {}
+            book: {},
+            users: []
         }
     },
     mounted(){
         this.getBooks();
+        this.getUsers();
     },
     methods: {
         async getBooks(){
@@ -156,6 +173,15 @@ export default {
                 console.error(error);
             }
         },
+        async getUsers(){
+            try {
+                let req = await axios.get(`/api/users`);
+                this.users = req.data.data;
+                console.log(this.users);
+            } catch (error) {
+
+            }
+        },
         async deleteBook(id){
             try {
                 let req = await axios.delete(`/api/books/`+id);
@@ -167,6 +193,7 @@ export default {
         checkFormValidity() {
             const valid = this.$refs.form.checkValidity()
             this.bookState.user = valid
+            this.bookState.user_id = valid
             return valid
         },
         handleOk(bvModalEvt) {
@@ -195,6 +222,7 @@ export default {
         resetModal() {
             this.book = {}
             this.bookState.user = null
+            this.bookState.user_id = null
         },
     }
 }
