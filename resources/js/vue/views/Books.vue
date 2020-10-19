@@ -10,6 +10,13 @@
                 <DataTable v-if="this.tableData.columns.length > 0" :dataTable="tableData"></DataTable>
             </b-col>
         </b-row>
+        <b-modal id="mBorrow" :title="modalTitle" @ok="handleOk" @hidden="resetModal">
+            <form ref="form" @submit.stop.prevent="handleSubmit">
+                <b-form-group v-if="book.available>0" :state="bookState.user" label="User" label-for="user-input" invalid-feedback="User is required">
+                    <b-form-input id="user-input" v-model="book.user" :state="bookState.user" required disabled></b-form-input>
+                </b-form-group>
+            </form>
+        </b-modal>
     </div>
 </template>
 <script>
@@ -31,6 +38,11 @@ export default {
                 columns: [],
                 rows: []
             },
+            modalTitle: 'Borrow ',
+            bookState: {
+                user: null,
+            },
+            book: {}
         }
     },
     mounted(){
@@ -78,7 +90,12 @@ export default {
                         value: 'edit',
                         text: '',
                         isButton: true,
-                    }
+                    },
+                    {
+                        value: 'borrow',
+                        text: '',
+                        isButton: true,
+                    },
                 ];
 
                 let rows = await this.books.map(element => {
@@ -111,6 +128,25 @@ export default {
                                     vm.$router.push({ name: 'EditBook', params: { id: field.row.id }});
                                 }
                             }]
+                        },
+                        'borrow': {
+                            value: [{
+                            row: element,
+                            text: element.available === 'no' ? 'Return': 'Borrow',
+                            class: ['btn', element.available === 'no' ? 'btn-warning': 'btn-success'],
+                            func: async function (event, column, field) {
+                                    vm.book.id = field.row.id;
+                                    if (element.available === 'no') {
+                                        vm.modalTitle = 'Return ' + field.row.name;
+                                        vm.book.user = element.user;
+                                        vm.book.available = '1';
+                                    }else{
+                                        vm.modalTitle = 'Borrow ' + field.row.name;
+                                        vm.book.available = '0';
+                                    }
+                                    vm.$bvModal.show('mBorrow');
+                                }
+                            }]
                         }
                     }
                 });
@@ -127,7 +163,39 @@ export default {
             } catch (error) {
                 console.error(error);
             }
-        }
+        },
+        checkFormValidity() {
+            const valid = this.$refs.form.checkValidity()
+            this.bookState.user = valid
+            return valid
+        },
+        handleOk(bvModalEvt) {
+            // Prevent modal from closing
+            bvModalEvt.preventDefault()
+            // Trigger submit handler
+            this.handleSubmit()
+        },
+        async handleSubmit() {
+            // Exit when the form isn't valid
+            if (!this.checkFormValidity()) {
+                return
+            }
+
+            let params = {
+                available: this.book.available,
+                user_id: this.book.user ? null : this.book.user_id
+            };
+            let req = await axios.post(`/api/books/`+this.book.id, params);
+            await this.getBooks();
+            // Hide the modal manually
+            this.$nextTick(() => {
+                this.$bvModal.hide('mBorrow')
+            })
+        },
+        resetModal() {
+            this.book = {}
+            this.bookState.user = null
+        },
     }
 }
 </script>

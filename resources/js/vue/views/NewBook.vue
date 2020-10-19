@@ -37,8 +37,8 @@
                     </div>
 
                     <b-form-group label="Available">
-                        <b-form-radio v-model="form.available" name="some-radios" value="0">No</b-form-radio>
-                        <b-form-radio v-model="form.available" name="some-radios" value="1">Yes</b-form-radio>
+                        <b-form-radio v-model="form.available" name="some-radios" value="0" disabled>No</b-form-radio>
+                        <b-form-radio v-model="form.available" name="some-radios" value="1" disabled>Yes</b-form-radio>
                     </b-form-group>
 
                     <b-button type="submit" variant="primary">Submit</b-button>

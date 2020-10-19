@@ -17,7 +17,8 @@ class BookController extends Controller
     {
         $books = DB::table('books')
         ->join('categories', 'books.category_id', '=', 'categories.id')
-        ->select(DB::raw('books.id, books.name, books.author, books.category_id, categories.name category, books.published, case books.available when 1 then "yes" else "no" end as available, books.user_id'))
+        ->leftjoin('users', 'books.user_id', '=', 'users.id')
+        ->select(DB::raw('books.id, books.name, books.author, books.category_id, categories.name category, books.published, case books.available when 1 then "yes" else "no" end as available, books.user_id, users.name user'))
         ->get();
         return response()->json(['status'=>'ok','data'=>$books], 200);
     }
