@@ -1,6 +1,7 @@
 import Vue from "vue";
 import VueRouter from "vue-router";
 import Loading from "vue-loading-overlay";
+import 'vue-loading-overlay/dist/vue-loading.css';
 import helper from "./vue/services/helper";
 import { BootstrapVue, IconsPlugin } from 'bootstrap-vue';
 
@@ -8,7 +9,14 @@ window._ = require('lodash');
 
 window.Vue = Vue;
 Vue.use(VueRouter);
-Vue.use(Loading);
+Vue.use(Loading, {
+    // props
+    'is-full-page': true,
+    color: 'blue',
+    loader: 'spinner',
+  },{
+    // slots
+  });
 window.helper = helper;
 // Install BootstrapVue
 Vue.use(BootstrapVue);
