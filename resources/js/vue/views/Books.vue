@@ -177,7 +177,7 @@ export default {
             try {
                 let req = await axios.get(`/api/users`);
                 this.users = req.data.data;
-                console.log(this.users);
+                // console.log(this.users);
             } catch (error) {
 
             }
@@ -185,7 +185,7 @@ export default {
         async deleteBook(id){
             try {
                 let req = await axios.delete(`/api/books/`+id);
-                console.log(req);
+                // console.log(req);
             } catch (error) {
                 console.error(error);
             }

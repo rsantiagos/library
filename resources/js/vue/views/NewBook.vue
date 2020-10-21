@@ -95,7 +95,7 @@ export default {
         async getBook(id){
             try {
                 let resp = await axios.get('/api/book/' + id);
-                console.log(resp.data.data);
+                // console.log(resp.data.data);
                 this.form = resp.data.data[0];
             } catch (error) {
 
